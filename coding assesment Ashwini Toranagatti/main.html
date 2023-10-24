@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a Docket</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Create a Docket</h2>
+    <form action="process_form.php" method="post">
+        <label for="docket_name">Name:</label>
+        <input type="text" id="docket_name" name="docket_name" required><br><br>
+
+        <label for="start_time">Start Time:</label>
+        <input type="time" id="start_time" name="start_time" required><br><br>
+
+        <label for="end_time">End Time:</label>
+        <input type="time" id="end_time" name="end_time" required><br><br>
+
+        <label for="hours_worked">No. of Hours Worked:</label>
+        <input type="number" id="hours_worked" name="hours_worked" required><br><br>
+
+        <label for="rate_per_hour">Rate per Hour:</label>
+        <input type="number" id="rate_per_hour" name="rate_per_hour" required><br><br>
+
+        <label for="supplier_name">Supplier Name:</label>
+        <select id="supplier_name" name="supplier_name" required>
+            <option value="s1">Select option</option>
+        </select><br><br>
+
+        <label for="purchase_name">Purchase Name:</label>
+        <select id="purchase_name" name="purchase_name" required>
+            <option value="p1">Select option</option>
+        </select><br><br>
+
+        <input type="submit" value="Create Docket">
+    </form>
+
+    <!-- JavaScript to populate dropdowns from CSV -->
+    <script>
+        window.onload = function () {
+            // Populate Purchase Name dropdown
+            const purchaseDropdown = document.getElementById("purchase_name");
+
+            fetch('export29913.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const purchaseNames = data.split('\n');
+
+                    purchaseNames.forEach(name => {
+                        const option = document.createElement("option");
+                        option.text = name.trim();
+                        purchaseDropdown.add(option);
+                    });
+                })
+                .catch(error => console.error(error));
+
+            // Populate Supplier Name dropdown
+            const supplierDropdown = document.getElementById("supplier_name");
+
+            fetch('export29913.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const supplierNames = data.split('\n');
+
+                    supplierNames.forEach(name => {
+                        const option = document.createElement("option");
+                        option.text = name.trim();
+                        supplierDropdown.add(option);
+                    });
+                })
+                .catch(error => console.error(error));
+        };
+    </script>
+</body>
+</html>
